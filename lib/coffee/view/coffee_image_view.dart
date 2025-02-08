@@ -1,29 +1,28 @@
-// lib/ui/coffee_image_widget.dart
-import 'package:coffee_app/models/coffee_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:coffee_domain/coffee_domain.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart'; // Import the package
 
-class CoffeeImageWidget extends StatelessWidget {
-  final CoffeeImage coffeeImage;
-  final bool isFavorite;
-  final VoidCallback onRefresh;
-  final Function(CoffeeImage) onFavoriteToggled;
-
-  const CoffeeImageWidget({
+class CoffeeImageView extends StatelessWidget {
+  const CoffeeImageView({
     super.key,
-    required this.coffeeImage,
+    required this.coffee,
     required this.isFavorite,
     required this.onRefresh,
     required this.onFavoriteToggled,
   });
+  final Coffee coffee;
+  final bool isFavorite;
+  final VoidCallback onRefresh;
+  final void Function(Coffee) onFavoriteToggled;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CachedNetworkImage( // Use CachedNetworkImage
-          imageUrl: coffeeImage.url,
+        CachedNetworkImage(
+          // Use CachedNetworkImage
+          imageUrl: coffee.imageUrl,
           placeholder: (context, url) => const CircularProgressIndicator(), // Loading placeholder
           errorWidget: (context, url, error) => const Icon(Icons.error), // Error widget
           fit: BoxFit.cover, // Or BoxFit.contain, depending on your needs
@@ -37,7 +36,7 @@ class CoffeeImageWidget extends StatelessWidget {
               icon: const Icon(Icons.refresh),
             ),
             IconButton(
-              onPressed: () => onFavoriteToggled(coffeeImage),
+              onPressed: () => onFavoriteToggled(coffee),
               icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
             ),
           ],

@@ -22,6 +22,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.8.0"
+  api_client:
+    dependency: "direct main"
+    description:
+      path: "packages/api_client"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   args:
     dependency: transitive
     description:
@@ -102,6 +109,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  coffee_domain:
+    dependency: "direct main"
+    description:
+      path: "packages/coffee_domain"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   collection:
     dependency: transitive
     description:
@@ -462,7 +476,7 @@ packages:
     source: hosted
     version: "1.5.1"
   provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: provider
       sha256: c8a055ee5ce3fd98d6fc872478b03823ffdb448699c6ebdbbc71d59b596fd48c
