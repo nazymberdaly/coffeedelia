@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 /// {@template coffee_entity}
@@ -86,5 +89,12 @@ class DbClient {
       return CoffeeEntity.fromMap(maps.first);
     }
     return null;
+  }
+
+  Future<String> saveImage(File imageFile, String coffeeName) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final newImagePath = '${directory.path}/${coffeeName}_${DateTime.now().millisecondsSinceEpoch}.jpg'; // Include timestamp for uniqueness
+    await imageFile.copy(newImagePath);
+    return newImagePath;
   }
 }
