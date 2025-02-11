@@ -2,3 +2,4 @@
 library;
 
 export 'src/db_client.dart';
+export 'src/errors/db_client_exception.dart';

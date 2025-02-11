@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:coffee_domain/coffee_domain.dart';
+import 'package:db_client/db_client.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -71,9 +72,19 @@ class DbClient {
     ''');
   }
 
-  Future<int> insertCoffee(CoffeeEntity coffee) async {
-    final db = await database;
-    return db.insert('coffees', coffee.toMap());
+  Future<void> insertCoffee(CoffeeEntity coffee) async {
+    try {
+      final db = await database;
+      await db.insert('coffees', {'imagePath': coffee.imagePath});
+    } on DatabaseException catch (e) {
+      if (e.isUniqueConstraintError()) {
+        throw DbClientException('Duplicate entry error');
+      } else {
+        throw DbClientException('Database error: ${e.toString()}');
+      }
+    } catch (e) {
+      print('Unexpected error: $e');
+    }
   }
 
   Future<List<CoffeeEntity>> getCoffees() async {

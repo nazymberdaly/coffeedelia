@@ -21,3 +21,14 @@ stackTrace: $stackTrace
 ''';
   }
 }
+
+
+class NetworkException implements Exception {
+  NetworkException(this.cause);
+  final String cause;
+}
+
+class ServerException implements Exception {
+  ServerException(this.cause);
+  final String cause;
+}

@@ -9,6 +9,8 @@ class FavoriteCoffeesLoaded extends FavoriteCoffeesState {
   final List<Coffee> coffees;
 }
 
+class FavoriteCoffeesEmpty extends FavoriteCoffeesState {}
+
 class FavoriteCoffeesError extends FavoriteCoffeesState {
   FavoriteCoffeesError({required this.message});
   final String message;

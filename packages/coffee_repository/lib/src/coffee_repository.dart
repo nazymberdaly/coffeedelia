@@ -16,12 +16,11 @@ class CoffeeRepository {
   final DbClient _dbClient;
 
   Future<void> addCoffee(String imageUrl) async {
-   // final imagePath = await _dbClient.saveImage(imageFile, name);
-   // final coffee = CoffeeEntity(imagePath: imagePath);
+    // final imagePath = await _dbClient.saveImage(imageFile, name);
+    // final coffee = CoffeeEntity(imagePath: imagePath);
     //await _dbClient.insertCoffee(coffee);
 
-    final response =
-        await http.get(Uri.parse(imageUrl)); // Download
+    final response = await http.get(Uri.parse(imageUrl)); // Download
 
     if (response.statusCode == 200) {
       final bytes = response.bodyBytes; // Get image bytes
@@ -31,7 +30,7 @@ class CoffeeRepository {
       final imageFile = File(newImagePath);
       await imageFile.writeAsBytes(bytes); // Save to file
 
-     final coffee = CoffeeEntity(imagePath: newImagePath);
+      final coffee = CoffeeEntity(imagePath: newImagePath);
       await _dbClient.insertCoffee(coffee);
     }
   }
