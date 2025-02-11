@@ -17,9 +17,12 @@ class FavoriteCoffeesBloc
   final CoffeeRepository _coffeeRepository;
 
   Future<void> _onAddFavoriteCoffee(
-      AddFavoriteCoffee event, Emitter<FavoriteCoffeesState> emit) async {
+    AddFavoriteCoffee event,
+    Emitter<FavoriteCoffeesState> emit,
+  ) async {
     try {
-      await _coffeeRepository.addCoffee(event.coffee.imageUrl); // Use the CoffeeService
+      await _coffeeRepository
+          .addCoffee(event.coffee.imageUrl); // Use the CoffeeService
       add(LoadFavoriteCoffees()); // Reload after adding
     } catch (e) {
       emit(FavoriteCoffeesError(message: e.toString()));
@@ -27,20 +30,27 @@ class FavoriteCoffeesBloc
   }
 
   Future<void> _onLoadFavoriteCoffees(
-      LoadFavoriteCoffees event, Emitter<FavoriteCoffeesState> emit) async {
+    LoadFavoriteCoffees event,
+    Emitter<FavoriteCoffeesState> emit,
+  ) async {
     emit(FavoriteCoffeesLoading());
     try {
       final coffees = await _coffeeRepository.getFavoriteCoffees();
 
-      emit(FavoriteCoffeesLoaded(
-          coffees: coffees.map((entity) => entity.toDomain()).toList()));
+      emit(
+        FavoriteCoffeesLoaded(
+          coffees: coffees.map((entity) => entity.toDomain()).toList(),
+        ),
+      );
     } catch (e) {
       emit(FavoriteCoffeesError(message: e.toString()));
     }
   }
 
   Future<void> _onRemoveFavoriteCoffee(
-      RemoveFavoriteCoffee event, Emitter<FavoriteCoffeesState> emit) async {
+    RemoveFavoriteCoffee event,
+    Emitter<FavoriteCoffeesState> emit,
+  ) async {
     try {
       await _coffeeRepository.removeCoffee(event.id);
       add(LoadFavoriteCoffees());

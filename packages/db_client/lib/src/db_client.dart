@@ -34,6 +34,7 @@ class CoffeeEntity {
   }
 
   Coffee toDomain() => Coffee(
+        id: id,
         imageUrl: imagePath,
       );
 }
@@ -98,7 +99,8 @@ class DbClient {
 
   Future<String> saveImage(File imageFile, String coffeeName) async {
     final directory = await getApplicationDocumentsDirectory();
-    final newImagePath = '${directory.path}/${coffeeName}_${DateTime.now().millisecondsSinceEpoch}.jpg'; // Include timestamp for uniqueness
+    final newImagePath =
+        '${directory.path}/${coffeeName}_${DateTime.now().millisecondsSinceEpoch}.jpg'; // Include timestamp for uniqueness
     await imageFile.copy(newImagePath);
     return newImagePath;
   }
