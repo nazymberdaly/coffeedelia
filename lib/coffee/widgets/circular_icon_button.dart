@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 
+/// A customizable circular icon button with tap effects.
 class CircularIconButton extends StatefulWidget {
-
+  /// Creates a [CircularIconButton].
   const CircularIconButton({
     required this.icon, required this.onTap, super.key,
     this.iconColor = Colors.white,
     this.backgroundColor = Colors.black,
     this.size = 60.0,
   });
+  /// The icon to be displayed within the button.
   final IconData icon;
+
+  /// Callback function when the button is tapped.
   final VoidCallback onTap;
+
+  /// Color of the icon.
   final Color iconColor;
+
+  /// Background color of the button.
   final Color backgroundColor;
+
+  /// The size (diameter) of the button.
   final double size;
 
   @override

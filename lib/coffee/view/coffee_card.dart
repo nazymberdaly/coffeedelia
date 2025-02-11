@@ -1,18 +1,23 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coffee_domain/coffee_domain.dart';
 import 'package:coffeedelia/coffee/coffee.dart';
-import 'package:coffeedelia/coffee/view/widgets/image_card.dart';
 import 'package:flutter/material.dart';
 
+/// A card widget that displays a coffee image with swipe actions.
 class CoffeeCard extends StatefulWidget {
+  /// Creates a [CoffeeCard].
   const CoffeeCard({
     required this.coffee,
     required this.onRefresh,
     required this.onFavoriteToggled,
     super.key,
   });
+  /// The coffee item to be displayed.
   final Coffee coffee;
+
+  /// Callback for when the card is dismissed (swiped left).
   final VoidCallback onRefresh;
+
+  /// Callback for when the coffee is added to favorites (swiped right).
   final void Function(Coffee) onFavoriteToggled;
 
   @override

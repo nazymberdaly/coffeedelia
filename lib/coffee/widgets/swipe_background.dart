@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 
+/// A widget that displays a colored background with an icon
 class SwipeBackground extends StatelessWidget {
+   /// Creates a [SwipeBackground].
   const SwipeBackground({
     required this.alignment,
     required this.color,
     required this.icon,
     super.key,
   });
+  /// The alignment of the icon within the container.
   final Alignment alignment;
+
+   /// The background color of the container.
   final Color color;
+
+  /// The icon to display.
   final IconData icon;
 
   @override
