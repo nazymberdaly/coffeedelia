@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:coffee_domain/coffee_domain.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -31,6 +32,10 @@ class CoffeeEntity {
       imagePath: map['imagePath'] as String,
     );
   }
+
+  Coffee toDomain() => Coffee(
+        imageUrl: imagePath,
+      );
 }
 
 /// {@template db_client}

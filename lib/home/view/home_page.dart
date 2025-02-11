@@ -1,7 +1,8 @@
 import 'package:api_client/api_client.dart';
-import 'package:coffee_domain/coffee_domain.dart';
 import 'package:coffeedelia/coffee/bloc/coffee_bloc.dart';
 import 'package:coffeedelia/coffee/view/coffee_image_view.dart';
+import 'package:coffeedelia/favorite_coffee/bloc/favorite_coffee_bloc.dart';
+import 'package:coffeedelia/favorite_coffee/view/favorite_coffee_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,12 +28,13 @@ class HomePage extends StatelessWidget {
               } else if (state is CoffeeLoaded) {
                 return CoffeeImageView(
                   coffee: state.coffee,
-                  isFavorite: false, //state.isFavorite, // Pass isFavorite to the widget
+                  isFavorite:
+                      false, //state.isFavorite, // Pass isFavorite to the widget
                   onRefresh: () =>
                       context.read<CoffeeBloc>().add(RefreshCoffeeImage()),
                   onFavoriteToggled: (coffeeImage) => context
-                      .read<CoffeeBloc>()
-                      .add(ToggleFavoriteCoffee(coffeeImage! as Coffee)),
+                      .read<FavoriteCoffeesBloc>()
+                      .add(AddFavoriteCoffee(coffee: coffeeImage)),
                 );
               } else if (state is CoffeeError) {
                 return Text('Error: ${state.error}');
@@ -41,6 +43,16 @@ class HomePage extends StatelessWidget {
               }
             },
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) =>
+                    const FavoriteCoffeeList(), // Use const if possible
+              ),
+            );
+          },
         ),
       ),
     );

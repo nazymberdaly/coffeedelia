@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:api_client/api_client.dart';
 import 'package:http/http.dart' as http;
 
+
 /// {@template api_client}
 /// A Very Good Project created by Very Good CLI.
 /// {@endtemplate}
