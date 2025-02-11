@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 void main() {
   group('CoffeeDomain', () {
     test('can be instantiated', () {
-      expect(Coffee(imageUrl: ''), isNotNull);
+      expect(Coffee(id: '', imageUrl: ''), isNotNull);
     });
   });
 }

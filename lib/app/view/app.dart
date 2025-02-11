@@ -1,8 +1,10 @@
 import 'package:api_client/api_client.dart';
 import 'package:coffee_repository/coffee_repository.dart';
+import 'package:coffeedelia/coffee/bloc/coffee_bloc.dart';
 import 'package:coffeedelia/favorite_coffee/bloc/favorite_coffee_bloc.dart';
 import 'package:coffeedelia/home/view/home_page.dart';
 import 'package:coffeedelia/l10n/l10n.dart';
+import 'package:coffeedelia/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -28,17 +30,31 @@ class App extends StatelessWidget {
               coffeeRepository: coffeeRepository,
             )..add(LoadFavoriteCoffees()),
           ),
+          BlocProvider(
+            lazy: false,
+            create: (context) => CoffeeBloc(
+              coffeeResource: context.read<CoffeeResource>(),
+            )..add(LoadCoffeeImage()),
+          ),
         ],
         child: MaterialApp(
           theme: ThemeData(
-            appBarTheme: AppBarTheme(
-              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+            primaryColor: const Color(0xFFB38867), // Coffee
+            scaffoldBackgroundColor: const Color(0xFFF3EEEA), // Ceramic
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Color(0xFFEBE3D5), // Slate
+              foregroundColor: Color(0xFF776B5D),
+            ),
+            bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+              backgroundColor: Color(0xFFEBE3D5),
+              selectedItemColor: Color(0xFF776B5D), // Latte
+              unselectedItemColor: Color(0xFFB0A695),
             ),
             useMaterial3: true,
           ),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: const HomePage(),
+          home: const MainScreen(),
         ),
       ),
     );

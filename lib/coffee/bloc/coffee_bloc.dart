@@ -11,7 +11,6 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
         super(CoffeeInitial()) {
     on<LoadCoffeeImage>(_onLoadCoffeeImage);
     on<RefreshCoffeeImage>(_onRefreshCoffeeImage);
-    on<ToggleFavoriteCoffee>(_onToggleFavoriteCoffee);
   }
   final CoffeeResource _coffeeResource;
 
@@ -38,21 +37,6 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
       emit(CoffeeLoaded(coffee: coffee));
     } catch (e) {
       emit(CoffeeError(error: e.toString()));
-    }
-  }
-
-  Future<void> _onToggleFavoriteCoffee(
-      ToggleFavoriteCoffee event, Emitter<CoffeeState> emit) async {
-    final coffeeImage = event.coffee;
-    final currentState = state;
-    if (currentState is CoffeeLoaded) {
-      //   final currentIsFavorite = currentState.isFavorite;
-      // try {
-      //   await _coffeeResource.toggleFavorite(coffeeImage, !currentIsFavorite);
-      //   emit(CoffeeLoaded(coffeeImage: coffeeImage, isFavorite: !currentIsFavorite));
-      // } catch (e) {
-      //   emit(CoffeeError(error: e.toString()));
-      // }
     }
   }
 }

@@ -16,20 +16,51 @@ class FavoriteCoffeeList extends StatelessWidget {
           if (state is FavoriteCoffeesLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is FavoriteCoffeesLoaded) {
-            return ListView.builder(
+            return GridView.builder(
+              padding: const EdgeInsets.all(8.0),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 8.0,
+                mainAxisSpacing: 8.0,
+                childAspectRatio: 1,
+              ),
               itemCount: state.coffees.length,
               itemBuilder: (context, index) {
                 final coffee = state.coffees[index];
-                return ListTile(
-                  leading: Image.file(File(coffee.imageUrl)),
-                  title: Text("coffee.name"),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () {
-                      // context
-                      //     .read<FavoriteCoffeesBloc>()
-                      //     .add(RemoveFavoriteCoffee(id: coffee.id!));
-                    },
+                return GestureDetector(
+                  onLongPress: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Delete Coffee'),
+                        content: const Text(
+                            'Are you sure you want to delete this coffee?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              context.read<FavoriteCoffeesBloc>().add(
+                                    RemoveFavoriteCoffee(id: coffee.id!),
+                                  );
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('Delete'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.file(
+                      File(coffee.imageUrl),
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
                   ),
                 );
               },

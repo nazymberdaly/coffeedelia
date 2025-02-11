@@ -12,6 +12,8 @@ dev_dependencies:
   very_good_analysis: ^6.0.0
 
 dependencies:  
+  coffee_domain:
+    path: ../../packages/coffee_domain  
   db_client:
     path: ../../packages/db_client
   http: ^1.3.0
