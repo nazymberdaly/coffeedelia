@@ -1,6 +1,6 @@
-import 'package:coffeedelia/coffee/bloc/coffee_bloc.dart';
-import 'package:coffeedelia/coffee/view/coffee_card.dart';
-import 'package:coffeedelia/favorite_coffee/bloc/favorite_coffee_bloc.dart';
+import 'package:coffeedelia/coffee/coffee.dart';
+import 'package:coffeedelia/favorite_coffee/favorite_coffee.dart';
+import 'package:coffeedelia_ui/coffeedelia_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,19 +21,26 @@ class HomePage extends StatelessWidget {
             } else if (state is CoffeeLoaded) {
               return CoffeeCard(
                 coffee: state.coffee,
-                isFavorite:
-                    false, //state.isFavorite, // Pass isFavorite to the widget
                 onRefresh: () =>
-                    context.read<CoffeeBloc>().add(RefreshCoffeeImage()),
+                    context.read<CoffeeBloc>().add(LoadCoffeeImage()),
                 onFavoriteToggled: (coffeeImage) {
                   context
                       .read<FavoriteCoffeesBloc>()
                       .add(AddFavoriteCoffee(coffee: coffeeImage));
-                  context.read<CoffeeBloc>().add(RefreshCoffeeImage());
+                  context.read<CoffeeBloc>().add(LoadCoffeeImage());
                 },
               );
             } else if (state is CoffeeError) {
-              return Text('Error: ${state.error}');
+              if (state.errorType == CoffeeErrorType.network) {
+                return ErrorView(
+                  title: state.error,
+                  onPressed: () => context.read<CoffeeBloc>().add(
+                        LoadCoffeeImage(),
+                      ),
+                      buttonTitle: 'Retry',
+                );
+              }
+              return Text(state.error, textAlign: TextAlign.center);
             } else {
               return Container(); // Or a default widget
             }

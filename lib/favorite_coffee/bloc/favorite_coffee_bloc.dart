@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:coffee_domain/coffee_domain.dart';
 import 'package:coffee_repository/coffee_repository.dart';
+import 'package:db_client/db_client.dart';
 
 part 'favorite_coffee_state.dart';
 part 'favorite_coffee_event.dart';
@@ -37,11 +38,17 @@ class FavoriteCoffeesBloc
     try {
       final coffees = await _coffeeRepository.getFavoriteCoffees();
 
-      emit(
-        FavoriteCoffeesLoaded(
-          coffees: coffees.map((entity) => entity.toDomain()).toList(),
-        ),
-      );
+      if (coffees.isEmpty) {
+        emit(FavoriteCoffeesEmpty()); // Emit empty state if no favorites
+      } else {
+        emit(
+          FavoriteCoffeesLoaded(
+            coffees: coffees.map((entity) => entity.toDomain()).toList(),
+          ),
+        );
+      }
+    } on DbClientException catch (error) {
+      emit(FavoriteCoffeesError(message: error.cause));
     } catch (e) {
       emit(FavoriteCoffeesError(message: e.toString()));
     }

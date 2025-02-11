@@ -10,7 +10,6 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
       : _coffeeResource = coffeeResource,
         super(CoffeeInitial()) {
     on<LoadCoffeeImage>(_onLoadCoffeeImage);
-    on<RefreshCoffeeImage>(_onRefreshCoffeeImage);
   }
   final CoffeeResource _coffeeResource;
 
@@ -19,24 +18,33 @@ class CoffeeBloc extends Bloc<CoffeeEvent, CoffeeState> {
     emit(CoffeeLoading());
     try {
       final coffee = await _coffeeResource.fetchRandomCoffee();
-      // final isFavorite = await _coffeeResource.isFavorite(coffeeImage);
-      emit(CoffeeLoaded(
-        coffee: coffee,
-        // isFavorite: isFavorite
-      ));
-    } catch (e) {
-      emit(CoffeeError(error: e.toString()));
-    }
-  }
-
-  Future<void> _onRefreshCoffeeImage(
-      RefreshCoffeeImage event, Emitter<CoffeeState> emit) async {
-    emit(CoffeeLoading());
-    try {
-      final coffee = await _coffeeResource.fetchRandomCoffee();
-      emit(CoffeeLoaded(coffee: coffee));
-    } catch (e) {
-      emit(CoffeeError(error: e.toString()));
+      emit(
+        CoffeeLoaded(
+          coffee: coffee,
+        ),
+      );
+    } on NetworkException catch (error) {
+      emit(
+        CoffeeError(
+          error: error.cause,
+          errorType: CoffeeErrorType.network,
+        ),
+      );
+    } on ServerException {
+      emit(
+        CoffeeError(
+          error: 'Server error. Please try again later.',
+          errorType: CoffeeErrorType.server,
+        ),
+      );
+    } catch (error, stackTrace) {
+      addError(error, stackTrace);
+      emit(
+        CoffeeError(
+          error: 'An unexpected error occurred.',
+          errorType: CoffeeErrorType.unknown,
+        ),
+      );
     }
   }
 }

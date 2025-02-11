@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:coffeedelia/favorite_coffee/bloc/favorite_coffee_bloc.dart';
+import 'package:coffeedelia_ui/coffeedelia_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -65,10 +66,20 @@ class FavoriteCoffeeList extends StatelessWidget {
                 );
               },
             );
+          } else if (state is FavoriteCoffeesEmpty) {
+            return const Center(
+              child: ErrorView(
+                title: 'No favorite coffees yet. Add some!',
+              ),
+            );
           } else if (state is FavoriteCoffeesError) {
             return Center(child: Text(state.message));
           } else {
-            return const Center(child: Text("Unknown State"));
+            return const Center(
+                child: Text(
+              'Unknown State',
+              style: TextStyle(color: Colors.amber),
+            ));
           }
         },
       ),

@@ -1,10 +1,9 @@
 import 'package:api_client/api_client.dart';
 import 'package:coffee_repository/coffee_repository.dart';
-import 'package:coffeedelia/coffee/bloc/coffee_bloc.dart';
-import 'package:coffeedelia/favorite_coffee/bloc/favorite_coffee_bloc.dart';
-import 'package:coffeedelia/home/view/home_page.dart';
+import 'package:coffeedelia/coffee/coffee.dart';
+import 'package:coffeedelia/coffeedelia_main/coffeedelia_main_page.dart';
+import 'package:coffeedelia/favorite_coffee/favorite_coffee.dart';
 import 'package:coffeedelia/l10n/l10n.dart';
-import 'package:coffeedelia/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +53,7 @@ class App extends StatelessWidget {
           ),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: const MainScreen(),
+          home: const CoffeedeliaMainPage(),
         ),
       ),
     );
