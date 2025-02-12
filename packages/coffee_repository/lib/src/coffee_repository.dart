@@ -12,14 +12,13 @@ class CoffeeRepository {
   const CoffeeRepository({
     required DbClient dbClient,
   }) : _dbClient = dbClient;
-
+  
+   /// Database client for handling coffee storage.
   final DbClient _dbClient;
-
+ 
+  /// Downloads an image from [imageUrl], saves it locally, and stores its 
+  /// path in the database.
   Future<void> addCoffee(String imageUrl) async {
-    // final imagePath = await _dbClient.saveImage(imageFile, name);
-    // final coffee = CoffeeEntity(imagePath: imagePath);
-    //await _dbClient.insertCoffee(coffee);
-
     final response = await http.get(Uri.parse(imageUrl)); // Download
 
     if (response.statusCode == 200) {
@@ -34,15 +33,18 @@ class CoffeeRepository {
       await _dbClient.insertCoffee(coffee);
     }
   }
-
+  
+  /// Retrieves a list of all stored coffee entities.
   Future<List<CoffeeEntity>> getFavoriteCoffees() async {
     return await _dbClient.getCoffees();
   }
-
+  
+  /// Removes a coffee entity from the database by its [id].
   Future<void> removeCoffee(int id) async {
     await _dbClient.deleteCoffee(id);
   }
-
+  
+  /// Retrieves a single coffee entity by its [id].
   Future<CoffeeEntity?> getCoffee(int id) async {
     return await _dbClient.getCoffee(id);
   }

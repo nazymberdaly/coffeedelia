@@ -17,7 +17,7 @@ class ImageCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: CachedNetworkImage(
-          imageUrl: "imageUrl",
+          imageUrl: imageUrl,
           height: 500,
           width: 350,
           fit: BoxFit.cover,
