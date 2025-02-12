@@ -1,6 +1,7 @@
 import 'package:api_client/api_client.dart';
 import 'package:bloc/bloc.dart';
 import 'package:coffee_domain/coffee_domain.dart';
+import 'package:equatable/equatable.dart';
 
 part 'coffee_state.dart';
 part 'coffee_event.dart';

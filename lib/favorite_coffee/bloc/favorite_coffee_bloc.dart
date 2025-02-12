@@ -2,10 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:coffee_domain/coffee_domain.dart';
 import 'package:coffee_repository/coffee_repository.dart';
 import 'package:db_client/db_client.dart';
+import 'package:equatable/equatable.dart';
 
 part 'favorite_coffee_state.dart';
 part 'favorite_coffee_event.dart';
 
+/// A Bloc that manages favorite coffee operations, including loading,
+/// adding, and removing favorite coffees.
 class FavoriteCoffeesBloc
     extends Bloc<FavoriteCoffeesEvent, FavoriteCoffeesState> {
   FavoriteCoffeesBloc({required CoffeeRepository coffeeRepository})
@@ -15,8 +18,12 @@ class FavoriteCoffeesBloc
     on<LoadFavoriteCoffees>(_onLoadFavoriteCoffees);
     on<RemoveFavoriteCoffee>(_onRemoveFavoriteCoffee);
   }
+
+  /// The repository handling favorite coffee storage and retrieval.
   final CoffeeRepository _coffeeRepository;
 
+
+  /// Handles the [AddFavoriteCoffee] event by adding a coffee to the repository.
   Future<void> _onAddFavoriteCoffee(
     AddFavoriteCoffee event,
     Emitter<FavoriteCoffeesState> emit,
@@ -29,7 +36,9 @@ class FavoriteCoffeesBloc
       emit(FavoriteCoffeesError(message: e.toString()));
     }
   }
-
+ 
+  /// Handles the [LoadFavoriteCoffees] event by fetching the list of 
+  /// favorite coffees
   Future<void> _onLoadFavoriteCoffees(
     LoadFavoriteCoffees event,
     Emitter<FavoriteCoffeesState> emit,
@@ -54,6 +63,8 @@ class FavoriteCoffeesBloc
     }
   }
 
+  /// Handles the [RemoveFavoriteCoffee] event by removing a coffee
+  ///  from the repository
   Future<void> _onRemoveFavoriteCoffee(
     RemoveFavoriteCoffee event,
     Emitter<FavoriteCoffeesState> emit,

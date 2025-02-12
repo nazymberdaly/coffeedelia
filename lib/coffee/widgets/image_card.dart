@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+/// A card widget that displays an image with caching support.
 class ImageCard extends StatelessWidget {
+  /// Creates an [ImageCard].
   const ImageCard({required this.imageUrl, super.key});
-
+ 
+  /// The URL of the image to be displayed.
   final String imageUrl;
 
   @override
